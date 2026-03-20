@@ -1,3 +1,4 @@
+staticfiles/
 venv/
 .venv/
 .env

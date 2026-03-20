@@ -8,3 +8,4 @@ pymongo>=4.0
 PyMySQL>=1.0
 oracledb>=2.0
 gunicorn>=22.0
+whitenoise>=6.7
