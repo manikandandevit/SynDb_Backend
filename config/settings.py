@@ -41,6 +41,11 @@ MIDDLEWARE = [
 ROOT_URLCONF = "config.urls"
 WSGI_APPLICATION = "config.wsgi.application"
 
+# Render / cloud Postgres often needs SSL when connecting from outside Render's network.
+_db_options = {}
+if os.environ.get("DB_SSLMODE", "").strip().lower() in ("require", "1", "true", "yes"):
+    _db_options["sslmode"] = "require"
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -49,7 +54,7 @@ DATABASES = {
         "PASSWORD": os.environ.get("DB_PASSWORD", ""),
         "HOST": os.environ.get("DB_HOST", "localhost"),
         "PORT": os.environ.get("DB_PORT", "5432"),
-        "OPTIONS": {},
+        "OPTIONS": _db_options,
     }
 }
 
@@ -102,7 +107,7 @@ if DEBUG:
     ]
 else:
     CORS_ALLOWED_ORIGINS = [
-        os.environ.get("CORS_ORIGIN", "http://localhost:5173"),
+        os.environ.get("CORS_ORIGIN","https://syn-db.vercel.app/"),
     ]
 CORS_ALLOW_CREDENTIALS = True
 
