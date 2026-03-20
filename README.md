@@ -57,3 +57,19 @@ Django REST API with PostgreSQL.
 
 - Create superuser: `python manage.py createsuperuser`
 - Admin: http://127.0.0.1:8000/admin/
+
+## Deploy (Render) — admin CSS/JS
+
+Production needs collected static files + WhiteNoise (already in `requirements.txt`).
+
+**Build command** on Render:
+
+```bash
+pip install -r requirements.txt && python manage.py collectstatic --noinput
+```
+
+**Start command** (example):
+
+```bash
+python manage.py migrate && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
+```
